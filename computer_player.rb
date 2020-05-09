@@ -1,13 +1,14 @@
 
 class ComputerPlayer < Player
 
-  attr_reader :possible_colors, :guess, :confirmed_colors
+  attr_reader :possible_colors, :guess, :confirmed_colors, :all_color_matched, :position_combo
 
   def initialize(game, name)
     super(game, name)
     @possible_colors = game.colors.map { |color| color }
     @guess = []
     @confirmed_colors = []
+    @all_color_matched = false
   end
 
   def guess_colors
@@ -15,7 +16,13 @@ class ComputerPlayer < Player
     return pick_guess_colors if game.round_counter == 1
     
     if game.matches.values.reduce(:+) == 4
-      guess.shuffle
+      unless all_color_matched
+        @position_combo = guess.permutation.to_a 
+        @all_color_matched = true
+      end
+      random_pick = position_combo.sample
+      position_combo.delete(random_pick)
+      random_pick     
     else
       new_matches = game.matches.values.reduce(:+) - confirmed_colors.length
       if new_matches == 0
