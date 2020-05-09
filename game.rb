@@ -95,7 +95,7 @@ class Game
     if game_over == :broken 
       return "#{breaker.name.capitalize} broke the code in #{round_counter} attempts!" 
     else 
-      return "Game Over... #{breaker.name.capitalize} coudn't break the code!" 
+      return "Game Over... #{breaker.name.capitalize} couldn't break the code!" 
     end
   end
 end
